@@ -1,0 +1,217 @@
+---
+layout: default
+title: Skunk - Home
+---
+
+<div class="text-center container">
+    <img class="img-fluid" src="./assets/images/skunk.png">
+    <h1 style="text-align: center;">A RubyCritic extension to calculate SkunkScore for a file or project</h1>
+
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+
+    <div class="container">
+
+
+        <div class="section__content col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+            <h2 style="font-weight: bold;">What is the SkunkScore?</h2>
+            <p>The SkunkScore is a value that assesses the technical debt of a module. It takes into account: </p>
+
+            <li>Code Complexity</li>
+            <li>Code Smells</li>
+            <li>Code Coverage</li>
+
+            <br>
+
+            <p>The main goal of the SkunkScore is to serve as a compass in your next refactoring adventure. It will help
+                you answer these questions:
+            </p>
+            <li>What can I do to pay off technical debt?</li>
+            <li>What are the most complicated files with the least code coverage?</li>
+            <li>What are good candidates for your next test-writing efforts?</li>
+            <li>What are good candidates for your next refactoring efforts?</li>
+            <br>
+            <p>The formula is not perfect and it is certainly controversial, so any feedback is welcome as a new issue!
+            </p>
+
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Installation</h2>
+            <span>Add this line to your application's Gemfile:</span>
+            <pre><code>gem 'skunk'</code></pre>
+            <br>
+            <span>And then execute:</span>
+            <pre><code>$ bundle</code></pre>
+            <br>
+            <span>Or install it yourself as:</span>
+            <pre><code>$ gem install skunk</code></pre>
+            <br>
+
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Usage</h2>
+            <h2 style="font-weight: 500;">Help details</h2>
+            <p>There are not that many options but here they are:</p>
+            <pre><code>skunk -h
+                Usage: skunk [options] [paths]
+                    -b, --branch BRANCH              Set branch to compare
+                    -v, --version                    Show gem's version
+                    -h, --help                       Show this message</code></pre>
+
+            <br>
+            <h2 style="font-weight: 500;">Getting a sorted list of stinkiest files</h2>
+            <p>To get the best results, make sure that you have coverage/.resultset.json in your application directory.
+                That way skunk knows what's the status of your test suite + code coverage.</p>
+            <span>Then simply run:</span>
+            <pre><code>skunk</code></pre>
+
+
+            <span>Then get a list of stinky files:</span>
+            <pre><code>$ skunk
+running flay smells
+
+running flog smells
+.............
+running reek smells
+.............
+running complexity
+.............
+running attributes
+.............
+running churn
+.............
+running simple_cov
+.............
+New critique at file:////Users/etagwerker/Projects/fastruby/skunk/tmp/rubycritic/overview.html
++-----------------------------------------------------+----------------------------+----------------------------+----------------------------+----------------------------+----------------------------+
+| file                                                | skunk_score                | churn_times_cost           | churn                      | cost                       | coverage                   |
++-----------------------------------------------------+----------------------------+----------------------------+----------------------------+----------------------------+----------------------------+
+| lib/skunk/cli/commands/default.rb                   | 166.44                     | 1.6643999999999999         | 3                          | 0.5548                     | 0                          |
+| lib/skunk/cli/application.rb                        | 139.2                      | 1.392                      | 3                          | 0.46399999999999997        | 0                          |
+| lib/skunk/cli/command_factory.rb                    | 97.6                       | 0.976                      | 2                          | 0.488                      | 0                          |
+| test/test_helper.rb                                 | 75.2                       | 0.752                      | 2                          | 0.376                      | 0                          |
+| lib/skunk/rubycritic/analysed_module.rb             | 48.12                      | 1.7184                     | 2                          | 0.8592                     | 72.72727272727273          |
+| test/lib/skunk/cli/commands/status_reporter_test.rb | 45.6                       | 0.456                      | 1                          | 0.456                      | 0                          |
+| lib/skunk/cli/commands/base.rb                      | 29.52                      | 0.2952                     | 3                          | 0.0984                     | 0                          |
+| lib/skunk/cli/commands/status_reporter.rb           | 8.0                        | 7.9956                     | 3                          | 2.6652                     | 100.0                      |
+| test/lib/skunk/rubycritic/analysed_module_test.rb   | 2.63                       | 2.6312                     | 2                          | 1.3156                     | 100.0                      |
+| lib/skunk.rb                                        | 0.0                        | 0.0                        | 2                          | 0.0                        | 0                          |
+| lib/skunk/cli/options.rb                            | 0.0                        | 0.0                        | 2                          | 0.0                        | 0                          |
+| lib/skunk/version.rb                                | 0.0                        | 0.0                        | 2                          | 0.0                        | 0                          |
+| lib/skunk/cli/commands/help.rb                      | 0.0                        | 0.0                        | 2                          | 0.0                        | 0                          |
++-----------------------------------------------------+----------------------------+----------------------------+----------------------------+----------------------------+----------------------------+
+
+SkunkScore Total: 612.31
+Modules Analysed: 13
+SkunkScore Average: 0.47100769230769230769230769231e2
+Worst SkunkScore: 166.44 (lib/skunk/cli/commands/default.rb)</code></pre>
+            <br>
+            <p>The command will run rubycritic and it will try to load code coverage data from your .resultset.json
+                file.</p>
+            <p>Skunk's report will be in the console. Use it wisely. :)</p>
+
+            <br>
+
+            <h2 style="font-weight: 500;">Comparing one branch vs. another</h2>
+            <p>Simply run:</p>
+            <pre><code>skunk -b &lt;target-branch-name&gt;</code></pre>
+            <br>
+            <p>Then get a SkunkScore average comparison:</p>
+            <pre><code>$ skunk -b master
+Switched to branch 'master'
+running flay smells
+..
+running flog smells
+..............
+running reek smells
+..............
+running complexity
+..............
+running attributes
+..............
+running churn
+..............
+running simple_cov
+..............
+Switched to branch 'feature/compare'
+running flay smells
+..
+running flog smells
+.................
+running reek smells
+.................
+running complexity
+.................
+running attributes
+.................
+running churn
+.................
+running simple_cov
+.................
+Base branch (master) average skunk score: 290.53999999999996
+Feature branch (feature/compare) average skunk score: 340.3005882352941
+Score: 340.3</code></pre>
+
+
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Known Issues</h2>
+            <p>The SkunkScore should be calculated per method. This would provide a more accurate representation of the
+                average SkunkScore in a module.</p>
+            <p>I think that the SkunkScore of a module should be the average of the SkunkScores of all of its methods.
+            </p>
+            <p>Right now the SkunkScore is calculated using the totals for a module:</p>
+            <li>Total Code Coverage Percentage per Module</li>
+            <li>Total Churn per Module</li>
+            <li>Total Cost per Module</li>
+
+            <p>For more details, feel free to review and improve this method: [RubyCritic::AnalysedModule#skunk_score]
+            </p>
+
+
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Development</h2>
+            <p>After checking out the repo, run bin/setup to install dependencies. You can also run bin/console for an
+                interactive prompt that will allow you to experiment.</p>
+            <p>To install this gem onto your local machine, run bundle exec rake install. To release a new version,
+                update the version number in version.rb, and then run bundle exec rake release, which will create a git
+                tag for the version, push git commits and tags, and push the .gem file to <a
+                    href="https://rubygems.org/" target="_blank">rubygems.org</a>.</p>
+
+
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Contributing</h2>
+
+            <p>Bug reports and pull requests are welcome on GitHub at <a
+                    href="https://github.com/fastruby/skunk/issues">Github Issues</a>.</p>
+            <br>
+            <hr>
+            <br>
+
+            <h2 style="font-weight: bold;">Sponsorship</h2>
+            <img src="assets\images\fastruby-logo.png">
+            <p>skunk is maintained and funded by <a href="https://fastruby.io/">FastRuby.io</a>. The names and logos for
+                FastRuby.io are trademarks of The
+                Lean Software Boutique LLC.</p>
+
+
+
+        </div>
+    </div>
+    <hr>
+</div>

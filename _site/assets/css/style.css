@@ -1,0 +1,109 @@
+/*
+*= require fastruby/styleguide
+*/
+
+
+* {
+    box-sizing: border-box;
+    text-align: initial;
+  }
+  
+  body {
+    margin: 0px;
+    font-family: 'segoe ui';
+  }
+  
+  .navbar-ext {
+    height: 65px;
+    width: 100%;
+    background-color: #f7f7f7;
+    position: relative;
+  }
+
+  .box {
+    display: flex;
+    align-items:center;
+ }
+  
+  .navbar-ext > .navbar-ext-header {
+    display: inline;
+  }
+  
+  .navbar-ext > .navbar-ext-header > .navbar-ext-title {
+    display: inline-block;
+    font-size: 22px;
+    color: #222222;
+    padding: 10px 10px 10px 10px;
+  }
+  
+  .navbar-ext > .navbar-ext-btn {
+    display: none;
+  }
+  
+  .navbar-ext > .navbar-ext-links {
+    display: inline;
+    float: right;
+    font-size: 18px;
+  }
+  
+  .navbar-ext > .navbar-ext-links > a {
+    display: inline-block;
+    padding: 13px 10px 13px 10px;
+    text-decoration: none;
+    color: #222222;
+  }
+  
+  .navbar-ext > .navbar-ext-links > a:hover {
+    background-color: #222222;
+  }
+  
+  .navbar-ext > #navbar-ext-check {
+    display: none;
+  }
+  
+  @media (max-width:600px) {
+    .navbar-ext > .navbar-ext-btn {
+      display: inline-block;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+    }
+    .navbar-ext > .navbar-ext-btn > label {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      padding: 13px;
+    }
+    .navbar-ext > .navbar-ext-btn > label:hover,.navbar-ext  #navbar-ext-check:checked ~ .navbar-ext-btn > label {
+      background-color:#ce2828;
+    }
+    .navbar-ext > .navbar-ext-btn > label > span {
+      display: block;
+      width: 25px;
+      height: 10px;
+      border-top: 2px solid #eaeaea;
+    }
+    .navbar-ext > .navbar-ext-links {
+      position: absolute;
+      display: block;
+      width: 100%;
+      background-color: #323235;
+      height: 0px;
+      transition: all 0.3s ease-in;
+      overflow-y: hidden;
+      top: 50px;
+      left: 0px;
+    }
+    .navbar-ext > .navbar-ext-links > a {
+      display: block;
+      width: 100%;
+    }
+    .navbar-ext > #navbar-ext-check:not(:checked) ~ .navbar-ext-links {
+      height: 0px;
+    }
+    .navbar-ext > #navbar-ext-check:checked ~ .navbar-ext-links {
+      height: calc(100vh - 50px);
+      overflow-y: auto;
+    }
+  }
+  
